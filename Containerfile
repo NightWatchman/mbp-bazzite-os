@@ -33,7 +33,16 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build.sh
-    
+
+# Install mbp facetimehd kernel module
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/build-kmod-facetimehd && \
+    /ctx/cleanup && \
+    ostree container commit   
+
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
