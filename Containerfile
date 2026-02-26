@@ -40,8 +40,9 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /ctx/build-kmod-facetimehd.sh && \
-    /ctx/cleanup && \
-    ostree container commit   
+    dnf5 clean all && \
+    rm -rf /tmp/* || true && \
+    ostree container commit
 
 ### LINTING
 ## Verify final image and contents are correct.
